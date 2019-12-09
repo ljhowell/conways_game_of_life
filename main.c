@@ -9,12 +9,12 @@
                         Allows the user to run the simulation multiple times, animating results and option to save to file.
                         Option to read in results from file to pick up where you left off.
                         Allow user to change the game rules to several pre-sets.
-                        Options include 1) Start from a grid of random state cells.
+                        Options include: 1) Start from a grid of random state cells.
                                             - Size of grid is chosen, cell alive/dead state random
-                                        2) Start from a customised grid of cells
+                                         2) Start from a customised grid of cells
                                             - Size of grid is chosen
                                             - User can add as many living cells as desired
-                                        3) Start from a pre-set grid or custom grid, reading plain text array from a file.
+                                         3) Start from a pre-set grid or custom grid, reading plain text array from a file.
                                             - Files contain grids for:
                                                 * Pulsar
                                                 * Penta-Decathlon Oscillator
@@ -34,7 +34,7 @@
 #define ALIVE 1
 #define DEAD 0
 #define TIME_INTERVAL 100 // Time interval between animation frmes (milliseconds)
-#define GAME_EPOCHS 100 // Default number of iterations for animation
+#define GAME_EPOCHS 50 // Default number of iterations for animation
 #define NMAX 50 // maximum tested number of rows and columns for game
 #define ASCII_ADJUST 48 // Map ASCII for integers to their denary (48 in ASCII -> 0 )
 #define NEWLINE_CHAR '\n' // The newline char used in files
@@ -553,8 +553,270 @@ void save_board(Cell **board, int n_rows, int n_cols, int fixed_bounds){
     }
 }
 
-/* DEMONSTRATION OF PROGRAM - SEE
+/* DEMONSTRATION OF PROGRAM OUTPUTS
+- PLEASE CLONE FROM GITHUB TO TEST FOR YOURSELF!
+- https://github.com/ljhowell/conways_game_of_life
+
+///// Initial menu on runtime. Showing random grid first
+
+-------------------------------------------
+           Conway's Game of Life
+-------------------------------------------
+
+Select Gamemode:
+        1: Random Grid
+        2: Custom Grid
+        3: Pre-set Grids
+        4: Change game rules
+        5: Quit
+1
+Please input number of rows as a integer:
+ 10
+Please input number of columns as a integer:
+ 20
+
+ ///// The grid initiates with random values of alive (o) and dead:
+o o     o           o o o o o o o   o
+o     o     o     o o   o   o   o o o
+o o   o o   o o o   o     o o o o o o
+  o                   o   o       o o
+o o             o     o   o o       o o
+o o o       o   o   o o       o o o o
+    o   o o o   o       o       o o o o
+o o o o o o o   o           o     o   o
+  o   o   o o o     o         o   o
+o   o o         o o   o   o o o   o o
+
+///// It then updates according to rules and animates by
+///// clearing the console and adding a delay of 0.1s between frames until 50 epochs:
+                              o
+o   o                           o o   o
+o o                                 o o
+o                             o
+                              o
+o o o       o o                     o o
+    o       o o                   o
+                                o o o
+o                               o     o
+o                             o o o   o
+After 50 generations, 35 cells survive
+
+Would you like continue (50 more iterations)?
+        1: Yes
+        0: No
+
+///// Then gives the user the option to continue running the simulation
+///// - In this case, the board is not at steady state so 'yes' chosen and another 50 frames happen
+                                  o o
+
+
+  o
+o   o
+o o         o o
+            o o
+                                  o o
+                                o     o
+                                o     o
+After 100 generations, 17 cells survive
+///// As before, but now the system is in steady state (3 x "still life's", 1 box, 1 boat and 1 beehive https://en.wikipedia.org/wiki/Conway%27s_Game_of_Life)
+///// - Then asks the user if they want to save the board
+...
+Would you like to save the board?
+        1: Yes
+        0: No
+1
+Saving grid to custom_board.txt
+Save successful
+
+/////////////////////////////////////////////////////////////////////////////////////////////
+///// We now demonstrate the custom grid feature: Lets add a blinker to a 5x5 grid by hand
+
+Select Gamemode:
+        1: Random Grid
+        2: Custom Grid
+        3: Pre-set Grids
+        4: Change game rules
+        5: Quit
+2
+Please input number of rows as a integer: 5
+Please input number of columns as a integer: 5
+Add cell (or -1 to run simulation)
+x = 2
+y = 3
+/// (Console is cleared) Cell added to (2,3)
+. . . . .
+. . o . .
+. . . . .
+. . . . .
+. . . . .
+Add cell (or -1 to run simulation)
+x = 3
+y = 3
+. . . . .
+. . o . .
+. . o . .
+. . . . .
+. . . . .
+Add cell (or -1 to run simulation)
+x = 4
+y = 3
+. . . . .
+. . o . .
+. . o . .
+. . o . .
+. . . . .
+Add cell (or -1 to run simulation)
+x = -1
+///// Then simulation plays, (blinker oscillates between vertical and horizontal 3 in a row)
+
+    o
+    o
+    o
+
+After 50 generations, 3 cells survive
+Would you like continue (50 more iterations)?
+        1: Yes
+        0: No
+0
+
+Would you like to save the board?
+        1: Yes
+        0: No
+0
+/////////////////////////////////////////////////////////////////////////////////////////////
+///// We now demonstrate the pre-set grid features
+Select Gamemode:
+        1: Random Grid
+        2: Custom Grid
+        3: Pre-set Grids
+        4: Change game rules
+        5: Quit
+3
+
+Pre-set Options
+        1: Pulsar - Oscillator - Period 3
+        2: Penta-Decathlon - Oscillator - Period 15
+        3: Glider - Diagonal translation
+        4: Spaceship - Horizontal translation
+        5: Glider Gun - Produces a glider every 30 generations
+        6: Die Hard - Methuselah - dies after 130 generations
+        7: Custom grid from file custom_board.txt
+5
+////// Board clears, board is read in from file, simulation animation for Gospel glider gun happens:
+
+                                                      o o
+                                                    o       o
+                    o o                           o           o       o o
+                    o o                           o       o   o o     o o
+  o o       o             o o                     o           o
+  o   o       o           o o o                     o       o
+    o o o o o             o o                         o o
+      o o o         o o                   o   o
+                    o o                     o o
+                                            o
 
 
 
+
+                                                          o
+                                                            o o
+                                                          o o
+
+
+
+After 50 generations, 59 cells survive
+//// We see the glider gun has produced two gliders within 50 generations. The other pre-sets are cool too
+//// We can also load in the grid we saved earlier...
+...
+Pre-set Options
+        1: Pulsar - Oscillator - Period 3
+        2: Penta-Decathlon - Oscillator - Period 15
+        3: Glider - Diagonal translation
+        4: Spaceship - Horizontal translation
+        5: Glider Gun - Produces a glider every 30 generations
+        6: Die Hard - Methuselah - dies after 130 generations
+        7: Custom grid from file custom_board.txt
+7
+                                  o o
+
+
+  o
+o   o
+o o         o o
+            o o
+                                  o o
+                                o     o
+                                o     o
+
+After 50 generations, 17 cells survive
+
+///// As we can see, the board was loaded in as it finished before and runs the animation (no changes as system in stationary state in this case)
+
+/////////////////////////////////////////////////////////////////////////////////////////////
+///// We now demonstrate the changing game rule feature
+Select Gamemode:
+        1: Random Grid
+        2: Custom Grid
+        3: Pre-set Grids
+        4: Change game rules
+        5: Quit
+4
+Select game rules
+
+Select Game Rules for n neighbours:
+        1: Classic Rules: Overpopulation: n > 3, Underpopulation: n < 2, Reproduction n = 3
+        2: Custom Rules 1: Overpopulation: n > 6, Underpopulation: n < 3, Reproduction n = 4
+        3: Custom Rules 2: Overpopulation: n > 4, Underpopulation: n < 2, Reproduction n = 3
+3
+Overpopulation: n > 4, Underpopulation: n < 2, Reproduction n = 3
+
+///// With this rule, strange maze like grids form
+
+Select Gamemode:
+        1: Random Grid
+        2: Custom Grid
+        3: Pre-set Grids
+        4: Change game rules
+        5: Quit
+1
+Please input number of rows as a integer:
+ 10
+Please input number of columns as a integer:
+ 10
+
+o o     o   o   o
+  o   o   o   o   o
+  o   o   o   o   o
+  o   o o   o     o
+  o     o   o   o o
+  o   o   o o     o
+  o   o   o   o o o
+  o   o   o       o
+  o   o   o o o o o
+  o o   o       o
+
+After 50 generations, 51 cells survive
+
+Would you like continue (50 more iterations)?
+        1: Yes
+        0: No
+0
+
+Would you like to save the board?
+        1: Yes
+        0: No
+0
+
+
+Select Gamemode:
+        1: Random Grid
+        2: Custom Grid
+        3: Pre-set Grids
+        4: Change game rules
+        5: Quit
+5
+Thanks for playing Conway's Game of Life. Now quitting...
+
+Process returned 0 (0x0)   execution time : 945.382 s
+Press any key to continue.
 */
