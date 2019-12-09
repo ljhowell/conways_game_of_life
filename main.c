@@ -28,7 +28,7 @@
 // Libraries needed
 #include <stdio.h>
 #include <stdlib.h>
-#include <stdbool.h>
+#include <stdbool.h> // Booleans
 #include <time.h> // Add delay into animations
 
 #define ALIVE 1
@@ -40,7 +40,7 @@
 #define NEWLINE_CHAR '\n' // The newline char used in files
 #define CUSTOM_BOARD_FILE "custom_board.txt" // The file to store the 'custom' board when save is chosen
 
-// Define a structure for a cell with a state 'alive' which can be either ALIVE or DEAD and store the number of neighbours
+// Define a structure with alias 'Cell' for a cell with a state which can be either ALIVE or DEAD and also store the number of neighbours
 typedef struct cell{
     bool alive;
     int n_alive_neighbrs;
